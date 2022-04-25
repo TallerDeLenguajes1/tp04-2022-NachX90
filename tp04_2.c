@@ -14,6 +14,7 @@ struct tarea
 void cargarTareas(tarea **pTareas, int numeroTareas);
 void listarTareas(tarea **pListaTareas, int numeroTareas);
 void revisarTareas(tarea **pTareas, tarea **pTareasRealizadas, int numeroTareas);
+void buscarTarea(tarea **pTareas, tarea **pTareasRealizadas, int numeroTareas);
 void liberarMemoria(tarea **pTareas, tarea **pTareasRealizadas, int numeroTareas);
 
 void main()
@@ -35,6 +36,7 @@ void main()
     listarTareas(pTareasRealizadas, cantidadTareas);
     printf("\nMostrando tareas Incompletas:\n");
     listarTareas(pTareas, cantidadTareas);
+    buscarTarea(pTareas, pTareasRealizadas, cantidadTareas);
     liberarMemoria(pTareas, pTareasRealizadas, cantidadTareas);
     printf("\n============================FIN=============================");
 }
@@ -100,6 +102,41 @@ void revisarTareas(tarea **pTareas, tarea **pTareasRealizadas, int cantidad)
                 pTareasRealizadas[i] = NULL;
             }
         }
+    }
+    printf("\n------------------------------------------------------------");
+}
+
+void buscarTarea(tarea **pTareas, tarea **pTareasRealizadas, int cantidad)
+{
+    int IDBuscado, encontrado=0;
+    printf("\nBuscar Tarea por ID:");
+    printf("\n\tID a buscar: ");
+    scanf("%i",&IDBuscado);
+    getchar();
+    for (int i = 0; i < cantidad; i++)
+    {
+        if (pTareas[i]!=NULL && pTareas[i]->ID==IDBuscado)
+        {
+            printf("\nTarea [%i]:", i+1);
+            printf("\n\tID:\t\t%i", pTareas[i]->ID);
+            printf("\n\tDescripcion:\t%s", pTareas[i]->descripcion);
+            printf("\n\tDuracion:\t%i", pTareas[i]->duracion);
+            printf("\n\tEstado:\t\tIncompleta");
+            encontrado=1;
+        }
+        else if (pTareasRealizadas[i]!=NULL && pTareasRealizadas[i]->ID==IDBuscado)
+        {
+            printf("\nTarea [%i]:", i+1);
+            printf("\n\tID:\t\t%i", pTareasRealizadas[i]->ID);
+            printf("\n\tDescripcion:\t%s", pTareasRealizadas[i]->descripcion);
+            printf("\n\tDuracion:\t%i", pTareasRealizadas[i]->duracion);
+            printf("\n\tEstado:\t\tRealizada");
+            encontrado=1;
+        }
+    }
+    if (!encontrado)
+    {
+        printf("\nNo se encontro la tarea con el ID buscado.");
     }
     printf("\n------------------------------------------------------------");
 }
